@@ -2,12 +2,15 @@ const passwordInput = document.querySelector("#passwordInput");
 
 passwordInput.addEventListener("input", function () {
   const password = this.value;
-  const strengthIndicator = document.getElementById(
-    "password-strength-indicator"
+
+  const strengthIndicator = document.querySelector(
+    "#password-strength-indicator"
   );
-  const strengthText = document.getElementById("password-strength-text");
+
+  const strengthText = document.querySelector("#password-strength-text");
+
   const strengths = {
-    0: "Muito Fraca",
+    0: "Muito fraca",
     1: "Fraca",
     2: "Moderada",
     3: "Forte",
@@ -16,18 +19,18 @@ passwordInput.addEventListener("input", function () {
 
   let score = 0;
 
-  // Incrementa a pontuação baseada na complexidade da senha
-  if (password.length >= 8) score++; // tamanho mínimo de 8 caracteres
-  if (password.match(/[a-z]/)) score++; // contém letra minúscula
-  if (password.match(/[A-Z]/)) score++; // contém letra maiúscula
-  if (password.match(/[0-9]/)) score++; // contém dígito
-  if (password.match(/[^a-zA-Z0-9]/)) score++; // contém caractere especial
+  // Requisitos
+  if (password.length >= 8) score++;
+  if (password.match(/[a-z]/)) score++;
+  if (password.match(/[A-Z]/)) score++;
+  if (password.match(/[0-9]/)) score++;
+  if (password.match(/[^a-zA-Z0-9]/)) score++;
 
-  // Define a largura da barra baseada na pontuação
-  const width = (score / 4) * 100; // Calcula a porcentagem
-  strengthIndicator.style.width = width + "%";
+  //  Calculo da %, pq a largura vai ser em %
+  const width = (score / 4) * 100;
 
-  // Define a cor da barra baseada na pontuação
+  strengthIndicator.style.width = `${width}%`;
+
   switch (score) {
     case 1:
       strengthIndicator.style.backgroundColor = "#e70b0b";
@@ -46,7 +49,6 @@ passwordInput.addEventListener("input", function () {
       break;
   }
 
-  // Atualiza o texto descritivo da força
   if (password.length > 0) {
     strengthText.innerHTML = `Força: ${strengths[score]}`;
   } else {
